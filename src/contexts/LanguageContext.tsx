@@ -7,7 +7,7 @@ import teTranslations from '../locales/hindi.json';
 // Initialize i18n
 i18n
   .use(initReactI18next)
-  .init({
+  .init({ 
     resources: {
       en: { translation: enTranslations },
       te: { translation: teTranslations }
