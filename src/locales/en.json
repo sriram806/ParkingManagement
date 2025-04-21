@@ -1,0 +1,154 @@
+{
+  "common": {
+    "appName": "Park Management System",
+    "loading": "Loading...",
+    "login": "Login",
+    "logout": "Logout",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "noResults": "No results found",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "role": "Role",
+    "actions": "Actions",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next"
+  },
+  "login": {
+    "title": "Login to your account",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password",
+    "forgotPassword": "Forgot password?",
+    "loginButton": "Login",
+    "invalidCredentials": "Invalid email or password"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "vehicleEntry": "Vehicle Entry",
+    "vehicleExit": "Vehicle Exit",
+    "guardManagement": "Manage Guards",
+    "pricingSettings": "Pricing Settings",
+    "vehicleLog": "Vehicle Log"
+  },
+  "guard": {
+    "dashboard": {
+      "title": "Guard Dashboard",
+      "welcome": "Welcome, {{name}}",
+      "currentShift": "Current Shift: {{shift}}",
+      "activeVehicles": "Active Vehicles",
+      "recentActivity": "Recent Activity",
+      "entryButton": "New Vehicle Entry",
+      "exitButton": "Process Vehicle Exit"
+    },
+    "vehicleEntry": {
+      "title": "New Vehicle Entry",
+      "vehicleNumber": "Vehicle Number",
+      "vehicleType": "Vehicle Type",
+      "twoWheeler": "Two Wheeler",
+      "threeWheeler": "Three Wheeler",
+      "fourWheeler": "Four Wheeler",
+      "entrySuccess": "Vehicle entry recorded successfully",
+      "generateQR": "Generate QR Code",
+      "scanQR": "Scan QR Code"
+    },
+    "vehicleExit": {
+      "title": "Vehicle Exit",
+      "vehicleNumber": "Vehicle Number",
+      "enterVehicleNumber": "Enter Vehicle Number",
+      "scanQR": "Scan QR Code",
+      "vehicleDetails": "Vehicle Details",
+      "entryTime": "Entry Time",
+      "duration": "Duration",
+      "fees": "Parking Fees",
+      "processExit": "Process Exit",
+      "exitSuccess": "Vehicle exit processed successfully",
+      "vehicleNotFound": "Vehicle not found"
+    }
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "totalVehicles": "Total Vehicles",
+      "vehiclesParked": "Currently Parked",
+      "todayRevenue": "Today's Revenue",
+      "monthRevenue": "Month Revenue",
+      "activeGuards": "Active Guards",
+      "revenueOverview": "Revenue Overview",
+      "vehicleTypeDistribution": "Vehicle Type Distribution",
+      "overstayAlerts": "Overstay Alerts"
+    },
+    "guardManagement": {
+      "title": "Guard Management",
+      "addGuard": "Add New Guard",
+      "editGuard": "Edit Guard",
+      "guardDetails": "Guard Details",
+      "name": "Name",
+      "email": "Email",
+      "shift": "Shift",
+      "day": "Day (6 AM - 6 PM)",
+      "night": "Night (6 PM - 6 AM)",
+      "status": "Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "deleteConfirm": "Are you sure you want to delete this guard?",
+      "guardAdded": "Guard added successfully",
+      "guardUpdated": "Guard updated successfully",
+      "guardDeleted": "Guard deleted successfully"
+    },
+    "pricingSettings": {
+      "title": "Pricing Settings",
+      "twoWheelerRate": "Two Wheeler (₹/day)",
+      "threeWheelerRate": "Three Wheeler (₹/day)",
+      "fourWheelerRate": "Four Wheeler (₹/day)",
+      "updateSuccess": "Pricing updated successfully"
+    },
+    "vehicleLog": {
+      "title": "Vehicle Log",
+      "vehicleNumber": "Vehicle Number",
+      "vehicleType": "Vehicle Type",
+      "entryTime": "Entry Time",
+      "exitTime": "Exit Time",
+      "duration": "Duration",
+      "fees": "Fees",
+      "guard": "Guard",
+      "shift": "Shift",
+      "status": "Status",
+      "active": "Active",
+      "exited": "Exited",
+      "filterByDate": "Filter by Date",
+      "filterByGuard": "Filter by Guard",
+      "filterByShift": "Filter by Shift",
+      "filterByVehicleType": "Filter by Vehicle Type",
+      "clearFilters": "Clear Filters",
+      "export": "Export to CSV"
+    }
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "connectionError": "Connection error. Please check your internet connection.",
+    "unauthorized": "Unauthorized access. Please login again.",
+    "notFound": "The requested resource was not found.",
+    "invalidInput": "Please check your input and try again."
+  },
+  "alerts": {
+    "vehicleOverstay": "Vehicle {{vehicleNumber}} has been parked for {{days}} days",
+    "connectionLost": "Connection lost. Reconnecting...",
+    "connectionRestored": "Connection restored"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email address",
+    "minLength": "Please enter at least {{count}} characters",
+    "invalidVehicleNumber": "Please enter a valid vehicle number",
+    "passwordMismatch": "Passwords do not match"
+  }
+}
