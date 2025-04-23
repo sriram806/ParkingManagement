@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { 
   CarFront, 
   Users, 
   IndianRupee, 
   CalendarClock, 
-  AlertTriangle,
-  Settings
+  AlertTriangle 
 } from 'lucide-react';
 import { 
   Chart as ChartJS, 
@@ -177,18 +175,9 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <div className="animate-fade-in">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">
-          {t('admin.dashboard.title')}
-        </h1>
-        <Link 
-          to="/admin/profile"
-          className="btn btn-primary flex items-center gap-2"
-        >
-          <Settings size={18} />
-          Profile Settings
-        </Link>
-      </div>
+      <h1 className="text-2xl font-bold text-gray-800 mb-6">
+        {t('admin.dashboard.title')}
+      </h1>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <StatCard

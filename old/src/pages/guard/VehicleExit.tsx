@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { CarTaxiFront, ArrowLeft, Search, Clock, Calendar, IndianRupee, Check } from 'lucide-react';
+import { CarTaxiFront, ArrowLeft, Search, Clock, Calendar, IndianRupee, QrCode as Qr, Check } from 'lucide-react';
 import apiService from '../../services/apiService';
 import { differenceInHours, format } from 'date-fns';
-import BillPrint from '../../components/billing/BillPrint';
 
 interface VehicleExitFormInput {
   vehicleNumber: string;
@@ -32,7 +31,6 @@ const VehicleExit: React.FC = () => {
   const [exitProcessed, setExitProcessed] = useState(false);
   const [exitData, setExitData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
-  const [showBill, setShowBill] = useState(false);
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<VehicleExitFormInput>({
     defaultValues: {
@@ -40,6 +38,7 @@ const VehicleExit: React.FC = () => {
     }
   });
 
+  // If vehicle number is provided in URL, search for it
   useEffect(() => {
     if (vehicleNumberParam) {
       searchVehicle(vehicleNumberParam);
@@ -49,26 +48,19 @@ const VehicleExit: React.FC = () => {
   const searchVehicle = async (vehicleNumber: string) => {
     setIsSearching(true);
     setError(null);
-    setVehicle(null);
     
     try {
       const response = await apiService.getVehicleByNumber(vehicleNumber);
       setVehicle(response.data);
-      setValue('vehicleNumber', '');
     } catch (error: any) {
       console.error('Error searching for vehicle:', error);
-      setValue('vehicleNumber', '');
+      setVehicle(null);
       
-      if (error?.response?.status === 400) {
-        if (error?.response?.data?.message === 'Vehicle has already exited') {
-          setError(t('guard.vehicleExit.vehicleAlreadyExited'));
-        } else {
-          setError(error?.response?.data?.message || t('guard.vehicleExit.vehicleNotFound'));
-        }
-      } else if (error?.response?.status === 404) {
-        setError(t('guard.vehicleExit.vehicleNotFound'));
+      // Provide more specific error message based on the status code
+      if (error?.response?.status === 400 && error?.response?.data?.message === 'Vehicle has already exited') {
+        setError(t('guard.vehicleExit.vehicleAlreadyExited'));
       } else {
-        setError(t('common.errors.unexpected'));
+        setError(error?.response?.data?.message || t('guard.vehicleExit.vehicleNotFound'));
       }
     } finally {
       setIsSearching(false);
@@ -88,7 +80,6 @@ const VehicleExit: React.FC = () => {
       const response = await apiService.processVehicleExit(vehicle.id);
       setExitData(response.data);
       setExitProcessed(true);
-      setShowBill(true);
     } catch (error) {
       console.error('Error processing vehicle exit:', error);
     } finally {
@@ -107,6 +98,11 @@ const VehicleExit: React.FC = () => {
       const days = Math.ceil(hours / 24);
       return `${days} days`;
     }
+  };
+
+  const handleScanQR = () => {
+    // This would integrate with a QR scanner in a real implementation
+    alert('QR scanning would be integrated here in a production app.');
   };
 
   if (exitProcessed && exitData) {
@@ -139,37 +135,37 @@ const VehicleExit: React.FC = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <p className="text-sm text-gray-500">Vehicle Number</p>
-                <p className="font-medium">{exitData.vehicle.vehicleNumber}</p>
+                <p className="font-medium">{exitData.vehicleNumber}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Vehicle Type</p>
                 <p className="font-medium">
-                  {exitData.vehicle.vehicleType === 'twoWheeler' ? 'Two Wheeler' :
-                   exitData.vehicle.vehicleType === 'threeWheeler' ? 'Three Wheeler' : 'Four Wheeler'}
+                  {exitData.vehicleType === 'twoWheeler' ? 'Two Wheeler' :
+                   exitData.vehicleType === 'threeWheeler' ? 'Three Wheeler' : 'Four Wheeler'}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Entry Time</p>
                 <p className="font-medium">
-                  {format(new Date(exitData.vehicle.entryTime), 'dd MMM yyyy, h:mm a')}
+                  {format(new Date(exitData.entryTime), 'dd MMM yyyy, h:mm a')}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Exit Time</p>
                 <p className="font-medium">
-                  {format(new Date(exitData.vehicle.exitTime), 'dd MMM yyyy, h:mm a')}
+                  {format(new Date(exitData.exitTime), 'dd MMM yyyy, h:mm a')}
                 </p>
               </div>
               <div className="col-span-2">
                 <p className="text-sm text-gray-500">Duration</p>
                 <p className="font-medium">
-                  {calculateDuration(exitData.vehicle.entryTime)}
+                  {calculateDuration(exitData.entryTime)}
                 </p>
               </div>
               <div className="col-span-2 border-t pt-3 mt-2">
                 <div className="flex justify-between items-center">
                   <p className="text-lg font-semibold">Total Fees</p>
-                  <p className="text-xl font-bold text-primary-700">₹{exitData.vehicle.fees}</p>
+                  <p className="text-xl font-bold text-primary-700">₹{exitData.fees}</p>
                 </div>
               </div>
             </div>
@@ -195,15 +191,6 @@ const VehicleExit: React.FC = () => {
             </button>
           </div>
         </div>
-
-        {showBill && exitData.bill && (
-          <BillPrint
-            bill={exitData.bill}
-            onClose={() => {
-              setShowBill(false);
-            }}
-          />
-        )}
       </div>
     );
   }
@@ -255,6 +242,14 @@ const VehicleExit: React.FC = () => {
               ) : (
                 <Search size={20} />
               )}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleScanQR}
+              className="btn border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 w-auto px-4"
+            >
+              <Qr size={20} />
             </button>
           </div>
         </form>

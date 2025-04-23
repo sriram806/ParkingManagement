@@ -1,0 +1,154 @@
+{
+  "common": {
+    "appName": "पार्क प्रबंधन प्रणाली",
+    "loading": "लोड हो रहा है...",
+    "login": "लॉगिन",
+    "logout": "लॉगआउट",
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "submit": "सबमिट करें",
+    "delete": "हटाएं",
+    "edit": "संपादित करें",
+    "view": "देखें",
+    "add": "जोड़ें",
+    "search": "खोजें",
+    "filter": "फ़िल्टर",
+    "noResults": "कोई परिणाम नहीं मिला",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "name": "नाम",
+    "role": "भूमिका",
+    "actions": "कार्य",
+    "confirm": "पुष्टि करें",
+    "back": "पीछे",
+    "next": "अगला"
+  },
+  "login": {
+    "title": "अपने खाते में लॉगिन करें",
+    "emailPlaceholder": "अपना ईमेल दर्ज करें",
+    "passwordPlaceholder": "अपना पासवर्ड दर्ज करें",
+    "forgotPassword": "पासवर्ड भूल गए?",
+    "loginButton": "लॉगिन",
+    "invalidCredentials": "अमान्य ईमेल या पासवर्ड"
+  },
+  "navigation": {
+    "dashboard": "डैशबोर्ड",
+    "vehicleEntry": "वाहन प्रवेश",
+    "vehicleExit": "वाहन निकासी",
+    "guardManagement": "गार्ड प्रबंधन",
+    "pricingSettings": "मूल्य निर्धारण सेटिंग्स",
+    "vehicleLog": "वाहन लॉग"
+  },
+  "guard": {
+    "dashboard": {
+      "title": "गार्ड डैशबोर्ड",
+      "welcome": "स्वागत है, {{name}}",
+      "currentShift": "वर्तमान शिफ्ट: {{shift}}",
+      "activeVehicles": "सक्रिय वाहन",
+      "recentActivity": "हाल की गतिविधियाँ",
+      "entryButton": "नया वाहन प्रवेश",
+      "exitButton": "वाहन निकासी प्रक्रिया करें"
+    },
+    "vehicleEntry": {
+      "title": "नया वाहन प्रवेश",
+      "vehicleNumber": "वाहन संख्या",
+      "vehicleType": "वाहन प्रकार",
+      "twoWheeler": "द्विचक्रीय वाहन",
+      "threeWheeler": "तीन पहिया वाहन",
+      "fourWheeler": "चार पहिया वाहन",
+      "entrySuccess": "वाहन प्रवेश सफलतापूर्वक पंजीकृत किया गया",
+      "generateQR": "QR कोड उत्पन्न करें",
+      "scanQR": "QR कोड स्कैन करें"
+    },
+    "vehicleExit": {
+      "title": "वाहन निकासी",
+      "vehicleNumber": "वाहन संख्या",
+      "enterVehicleNumber": "वाहन संख्या दर्ज करें",
+      "scanQR": "QR कोड स्कैन करें",
+      "vehicleDetails": "वाहन विवरण",
+      "entryTime": "प्रवेश समय",
+      "duration": "अवधि",
+      "fees": "पार्किंग शुल्क",
+      "processExit": "निकासी प्रक्रिया करें",
+      "exitSuccess": "वाहन निकासी सफलतापूर्वक की गई",
+      "vehicleNotFound": "वाहन नहीं मिला"
+    }
+  },
+  "admin": {
+    "dashboard": {
+      "title": "एडमिन डैशबोर्ड",
+      "totalVehicles": "कुल वाहन",
+      "vehiclesParked": "वर्तमान में पार्क किए गए वाहन",
+      "todayRevenue": "आज की आय",
+      "monthRevenue": "महीने की आय",
+      "activeGuards": "सक्रिय गार्ड",
+      "revenueOverview": "आय का अवलोकन",
+      "vehicleTypeDistribution": "वाहन प्रकार वितरण",
+      "overstayAlerts": "अधिक ठहराव चेतावनियाँ"
+    },
+    "guardManagement": {
+      "title": "गार्ड प्रबंधन",
+      "addGuard": "नया गार्ड जोड़ें",
+      "editGuard": "गार्ड संपादित करें",
+      "guardDetails": "गार्ड विवरण",
+      "name": "नाम",
+      "email": "ईमेल",
+      "shift": "शिफ्ट",
+      "day": "दिन (6 AM - 6 PM)",
+      "night": "रात्रि (6 PM - 6 AM)",
+      "status": "स्थिति",
+      "active": "सक्रिय",
+      "inactive": "निष्क्रिय",
+      "deleteConfirm": "क्या आप वाकई इस गार्ड को हटाना चाहते हैं?",
+      "guardAdded": "गार्ड सफलतापूर्वक जोड़ा गया",
+      "guardUpdated": "गार्ड सफलतापूर्वक अपडेट किया गया",
+      "guardDeleted": "गार्ड सफलतापूर्वक हटाया गया"
+    },
+    "pricingSettings": {
+      "title": "मूल्य निर्धारण सेटिंग्स",
+      "twoWheelerRate": "द्विचक्रीय वाहन (₹/दिन)",
+      "threeWheelerRate": "तीन पहिया वाहन (₹/दिन)",
+      "fourWheelerRate": "चार पहिया वाहन (₹/दिन)",
+      "updateSuccess": "मूल्य सफलतापूर्वक अपडेट किए गए"
+    },
+    "vehicleLog": {
+      "title": "वाहन लॉग",
+      "vehicleNumber": "वाहन संख्या",
+      "vehicleType": "वाहन प्रकार",
+      "entryTime": "प्रवेश समय",
+      "exitTime": "निकासी समय",
+      "duration": "अवधि",
+      "fees": "शुल्क",
+      "guard": "गार्ड",
+      "shift": "शिफ्ट",
+      "status": "स्थिति",
+      "active": "सक्रिय",
+      "exited": "निकासी",
+      "filterByDate": "तारीख द्वारा फ़िल्टर करें",
+      "filterByGuard": "गार्ड द्वारा फ़िल्टर करें",
+      "filterByShift": "शिफ्ट द्वारा फ़िल्टर करें",
+      "filterByVehicleType": "वाहन प्रकार द्वारा फ़िल्टर करें",
+      "clearFilters": "फ़िल्टर हटाएं",
+      "export": "CSV में निर्यात करें"
+    }
+  },
+  "errors": {
+    "generic": "कुछ गलती हुई है। कृपया फिर से प्रयास करें।",
+    "connectionError": "कनेक्शन त्रुटि। कृपया अपनी इंटरनेट कनेक्शन की जांच करें।",
+    "unauthorized": "अधिकृत नहीं है। कृपया फिर से लॉगिन करें।",
+    "notFound": "अनुरोधित संसाधन नहीं मिला।",
+    "invalidInput": "कृपया अपना इनपुट जांचें और फिर से प्रयास करें।"
+  },
+  "alerts": {
+    "vehicleOverstay": "वाहन {{vehicleNumber}} {{days}} दिनों से पार्क किया गया है",
+    "connectionLost": "कनेक्शन खो गया। फिर से कनेक्ट हो रहा है...",
+    "connectionRestored": "कनेक्शन पुनः स्थापित हो गया"
+  },
+  "validation": {
+    "required": "यह फ़ील्ड आवश्यक है",
+    "invalidEmail": "कृपया एक वैध ईमेल पता दर्ज करें",
+    "minLength": "कृपया कम से कम {{count}} वर्ण दर्ज करें",
+    "invalidVehicleNumber": "कृपया एक वैध वाहन संख्या दर्ज करें",
+    "passwordMismatch": "पासवर्ड मेल नहीं खाते"
+  }
+}

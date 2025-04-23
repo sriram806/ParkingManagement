@@ -2,12 +2,12 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import enTranslations from '../locales/en.json';
-import teTranslations from '../locales/te.json';
+import teTranslations from '../locales/hindi.json';
 
 // Initialize i18n
 i18n
   .use(initReactI18next)
-  .init({
+  .init({ 
     resources: {
       en: { translation: enTranslations },
       te: { translation: teTranslations }

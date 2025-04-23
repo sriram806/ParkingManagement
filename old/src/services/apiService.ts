@@ -55,8 +55,7 @@ const mockVehicles = [
     guardName: 'John Doe',
     shift: 'day',
     fees: null,
-    status: 'active',
-    billNumber: 'BILL-001'
+    status: 'active'
   },
   { 
     id: '2', 
@@ -68,8 +67,7 @@ const mockVehicles = [
     guardName: 'Jane Smith',
     shift: 'night',
     fees: 100,
-    status: 'exited',
-    billNumber: 'BILL-002'
+    status: 'exited'
   },
 ];
 
@@ -85,14 +83,14 @@ const login = async (email: string, password: string) => {
   await new Promise(resolve => setTimeout(resolve, 1000));
   
   // Mock login logic
-  if (email === 'guard@example.com' && password === 'password') {
+  if (email === 'user1@gmail.com' && password === '123456789') {
     // Return guard token
     return {
       data: {
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJuYW1lIjoiSm9obiBEb2UiLCJyb2xlIjoiZ3VhcmQiLCJzaGlmdCI6ImRheSIsImV4cCI6MTkwMDAwMDAwMH0.Ks9zzHUK8dryuwXA7Y3_3QVdp9L3OVd_h5HEmkqm5R0',
       },
     };
-  } else if (email === 'admin@example.com' && password === 'password') {
+  } else if (email === 'admin@gmail.com' && password === '123456789') {
     // Return admin token
     return {
       data: {
@@ -104,15 +102,10 @@ const login = async (email: string, password: string) => {
   throw new Error('Invalid credentials');
 };
 
-// Profile management
-const updateProfile = async (profileData: any) => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return { data: { ...profileData, id: '1' } };
-};
-
 // Mock services
 const getVehicles = async (filters = {}) => {
   await new Promise(resolve => setTimeout(resolve, 500));
+  // In a real app, we would filter based on the filters object
   return { data: mockVehicles };
 };
 
@@ -126,6 +119,7 @@ const getActiveVehicles = async () => {
 const getVehicleByNumber = async (vehicleNumber: string) => {
   await new Promise(resolve => setTimeout(resolve, 500));
   
+  // Modified to find vehicle regardless of status
   const vehicle = mockVehicles.find(
     v => v.vehicleNumber.toLowerCase() === vehicleNumber.toLowerCase()
   );
@@ -136,6 +130,7 @@ const getVehicleByNumber = async (vehicleNumber: string) => {
     });
   }
   
+  // If vehicle has already exited, return appropriate error
   if (vehicle.status === 'exited') {
     return Promise.reject({ 
       response: { status: 400, data: { message: 'Vehicle has already exited', vehicle } } 
@@ -147,8 +142,6 @@ const getVehicleByNumber = async (vehicleNumber: string) => {
 
 const createVehicleEntry = async (vehicleData: any) => {
   await new Promise(resolve => setTimeout(resolve, 1000));
-  const billNumber = `BILL-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
-  
   const newVehicle = {
     id: String(mockVehicles.length + 1),
     ...vehicleData,
@@ -156,24 +149,9 @@ const createVehicleEntry = async (vehicleData: any) => {
     exitTime: null,
     fees: null,
     status: 'active',
-    billNumber
   };
   
-  return { 
-    data: {
-      vehicle: newVehicle,
-      bill: {
-        billNumber,
-        vehicleNumber: newVehicle.vehicleNumber,
-        vehicleType: newVehicle.vehicleType,
-        entryTime: newVehicle.entryTime,
-        guardName: newVehicle.guardName,
-        shift: newVehicle.shift,
-        amount: 0,
-        createdAt: new Date().toISOString()
-      }
-    }
-  };
+  return { data: newVehicle };
 };
 
 const processVehicleExit = async (vehicleId: string) => {
@@ -186,6 +164,7 @@ const processVehicleExit = async (vehicleId: string) => {
     });
   }
   
+  // Calculate fees based on duration and vehicle type
   const entryTime = new Date(vehicle.entryTime).getTime();
   const exitTime = Date.now();
   const durationHours = (exitTime - entryTime) / (1000 * 60 * 60);
@@ -201,72 +180,15 @@ const processVehicleExit = async (vehicleId: string) => {
   }
   
   const totalFees = days * feePerDay;
-  const billNumber = `BILL-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
   
   const updatedVehicle = {
     ...vehicle,
     exitTime: new Date().toISOString(),
     fees: totalFees,
     status: 'exited',
-    billNumber
   };
   
-  return { 
-    data: {
-      vehicle: updatedVehicle,
-      bill: {
-        billNumber,
-        vehicleNumber: vehicle.vehicleNumber,
-        vehicleType: vehicle.vehicleType,
-        entryTime: vehicle.entryTime,
-        exitTime: updatedVehicle.exitTime,
-        duration: `${days} days`,
-        amount: totalFees,
-        guardName: vehicle.guardName,
-        shift: vehicle.shift,
-        createdAt: new Date().toISOString()
-      }
-    }
-  };
-};
-
-const createParkingPass = async (passData: any) => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  const billNumber = `PASS-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
-  const startDate = new Date();
-  const endDate = new Date();
-  endDate.setMonth(endDate.getMonth() + passData.monthsDuration);
-  
-  return {
-    data: {
-      pass: {
-        id: String(Math.random()),
-        vehicleId: passData.vehicleId,
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
-        monthsDuration: passData.monthsDuration,
-        amount: passData.amount,
-        status: 'active',
-        billNumber,
-        createdAt: new Date().toISOString()
-      },
-      bill: {
-        billNumber,
-        vehicleNumber: 'KA01AB1234', // In real app, get from vehicle
-        vehicleType: 'fourWheeler',
-        amount: passData.amount,
-        guardName: 'John Doe',
-        shift: 'day',
-        isParkingPass: true,
-        passDetails: {
-          startDate: startDate.toISOString(),
-          endDate: endDate.toISOString(),
-          monthsDuration: passData.monthsDuration
-        },
-        createdAt: new Date().toISOString()
-      }
-    }
-  };
+  return { data: updatedVehicle };
 };
 
 const getGuards = async () => {
@@ -348,13 +270,11 @@ const getDashboardStats = async () => {
 
 const apiService = {
   login,
-  updateProfile,
   getVehicles,
   getActiveVehicles,
   getVehicleByNumber,
   createVehicleEntry,
   processVehicleExit,
-  createParkingPass,
   getGuards,
   createGuard,
   updateGuard,

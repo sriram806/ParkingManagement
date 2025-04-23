@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { CarFront, Bike, Truck, Check, ArrowLeft } from 'lucide-react';
+import { CarFront, Bike, Truck, QrCode as Qr, Check, ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import apiService from '../../services/apiService';
+import QRCode from 'react-qr-code';
 import ParkingMap from '../../components/parking/ParkingMap';
 import SpotDetails from '../../components/parking/SpotDetails';
 import ZoneSelector from '../../components/parking/ZoneSelector';
 import { ParkingSpot } from '../../types';
 import useParkingStore from '../../stores/parkingStore';
-import BillPrint from '../../components/billing/BillPrint';
 
 interface VehicleEntryFormInput {
   vehicleNumber: string;
@@ -24,11 +24,11 @@ const VehicleEntry: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showQR, setShowQR] = useState(false);
   const [entrySuccessful, setEntrySuccessful] = useState(false);
   const [vehicleData, setVehicleData] = useState<any>(null);
   const [selectedSpot, setSelectedSpot] = useState<ParkingSpot | null>(null);
   const [showSpotDetails, setShowSpotDetails] = useState(false);
-  const [showBill, setShowBill] = useState(false);
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm<VehicleEntryFormInput>({
     defaultValues: {
@@ -52,7 +52,6 @@ const VehicleEntry: React.FC = () => {
       const response = await apiService.createVehicleEntry(vehicleEntry);
       setVehicleData(response.data);
       setEntrySuccessful(true);
-      setShowBill(true);
     } catch (error) {
       console.error('Error creating vehicle entry:', error);
     } finally {
@@ -60,8 +59,13 @@ const VehicleEntry: React.FC = () => {
     }
   };
 
+  const toggleQRCode = () => {
+    setShowQR(!showQR);
+  };
+
   const handleNewEntry = () => {
     setEntrySuccessful(false);
+    setShowQR(false);
     setVehicleData(null);
   };
 
@@ -252,19 +256,19 @@ const VehicleEntry: React.FC = () => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-sm text-gray-500">Vehicle Number</p>
-              <p className="font-medium">{vehicleData?.vehicle.vehicleNumber}</p>
+              <p className="font-medium">{vehicleData?.vehicleNumber}</p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Vehicle Type</p>
               <p className="font-medium">
-                {vehicleData?.vehicle.vehicleType === 'twoWheeler' ? 'Two Wheeler' :
-                 vehicleData?.vehicle.vehicleType === 'threeWheeler' ? 'Three Wheeler' : 'Four Wheeler'}
+                {vehicleData?.vehicleType === 'twoWheeler' ? 'Two Wheeler' :
+                 vehicleData?.vehicleType === 'threeWheeler' ? 'Three Wheeler' : 'Four Wheeler'}
               </p>
             </div>
             <div>
               <p className="text-sm text-gray-500">Entry Time</p>
               <p className="font-medium">
-                {new Date(vehicleData?.vehicle.entryTime).toLocaleTimeString([], { 
+                {new Date(vehicleData?.entryTime).toLocaleTimeString([], { 
                   hour: '2-digit', 
                   minute: '2-digit' 
                 })}
@@ -273,11 +277,33 @@ const VehicleEntry: React.FC = () => {
             <div>
               <p className="text-sm text-gray-500">Date</p>
               <p className="font-medium">
-                {new Date(vehicleData?.vehicle.entryTime).toLocaleDateString()}
+                {new Date(vehicleData?.entryTime).toLocaleDateString()}
               </p>
             </div>
           </div>
         </div>
+        
+        {showQR ? (
+          <div className="text-center mb-6">
+            <div className="bg-white p-4 inline-block rounded-lg shadow-sm">
+              <QRCode 
+                value={vehicleData?.vehicleNumber || ''}
+                size={180}
+              />
+            </div>
+            <p className="text-sm text-gray-600 mt-2">
+              This QR code can be used for quick vehicle exit processing.
+            </p>
+          </div>
+        ) : (
+          <button
+            onClick={toggleQRCode}
+            className="btn btn-secondary w-full mb-4 flex items-center justify-center gap-2"
+          >
+            <Qr size={18} />
+            {t('guard.vehicleEntry.generateQR')}
+          </button>
+        )}
         
         <div className="flex gap-4">
           <button
@@ -294,15 +320,6 @@ const VehicleEntry: React.FC = () => {
           </button>
         </div>
       </div>
-
-      {showBill && vehicleData?.bill && (
-        <BillPrint
-          bill={vehicleData.bill}
-          onClose={() => {
-            setShowBill(false);
-          }}
-        />
-      )}
     </div>
   );
 };

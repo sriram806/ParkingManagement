@@ -14,7 +14,6 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import GuardManagement from './pages/admin/GuardManagement';
 import PricingSettings from './pages/admin/PricingSettings';
 import VehicleLog from './pages/admin/VehicleLog';
-import ProfileSettings from './pages/profile/ProfileSettings';
 import LanguageProvider from './contexts/LanguageContext';
 import NotFound from './pages/NotFound';
 
@@ -40,7 +39,6 @@ function App() {
                 <Route path="guards" element={<GuardManagement />} />
                 <Route path="pricing" element={<PricingSettings />} />
                 <Route path="logs" element={<VehicleLog />} />
-                <Route path="profile" element={<ProfileSettings />} />
               </Route>
               
               <Route path="/" element={<Navigate to="/login" replace />} />
