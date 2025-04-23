@@ -85,14 +85,14 @@ const login = async (email: string, password: string) => {
   await new Promise(resolve => setTimeout(resolve, 1000));
   
   // Mock login logic
-  if (email === 'guard@example.com' && password === 'password') {
+  if (email === 'user1@gmail.com' && password === '123456789') {
     // Return guard token
     return {
       data: {
         token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJuYW1lIjoiSm9obiBEb2UiLCJyb2xlIjoiZ3VhcmQiLCJzaGlmdCI6ImRheSIsImV4cCI6MTkwMDAwMDAwMH0.Ks9zzHUK8dryuwXA7Y3_3QVdp9L3OVd_h5HEmkqm5R0',
       },
     };
-  } else if (email === 'admin@example.com' && password === 'password') {
+  } else if (email === 'admin@gmail.com' && password === '123456789') {
     // Return admin token
     return {
       data: {
